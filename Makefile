@@ -22,24 +22,26 @@ LIBFT = libft.a
 LINKER += -L$(DIR_LIBFT) -lft
 
 #SOURCES
-DIR_SOURCES = ./Src/ \
+DIR_SOURCES = ./Src/
+SUBDIR_SOURCES = Core/ \
+                 Signals/ \
+                 Parser/ \
+                 Executor/ \
+                 Buildtings/
 
-SUBDIR_SOURCES = ./Core/	\
-							./Signals	\
-							./Parser	\
-							./executor	\
-							./buildting	
-FILES_CORE = main.c 			\
-SOURCES = $(addprefix $(DIR_SOURCES), $(FILES_SOURCES))
-FILES_SIGNALS= main.c 			\
-SOURCES += $(addprefix $(DIR_SOURCES), $(FILES_SOURCES))
-FILES_PARSER = main.c 			\
-SOURCES += $(addprefix $(DIR_SOURCES), $(FILES_SOURCES))
-FILES_EXECUTOR = main.c 			\
-SOURCES += $(addprefix $(DIR_SOURCES), $(FILES_SOURCES))
-FILES_BUILDTINGS = main.c 			\
-SOURCES += $(addprefix $(DIR_SOURCES), $(FILES_SOURCES))
-SOURCES += $(addprefix $(DIR_SOURCES), $(FILES_SOURCES))
+FILES_CORE = main.c
+FILES_SIGNALS = signals.c
+FILES_PARSER = parser.c
+FILES_EXECUTOR = executor.c
+FILES_BUILDTINGS = builtins.c
+
+SOURCES_CORE = $(addprefix $(DIR_SOURCES)core/, $(FILES_CORE))
+SOURCES_SIGNALS = $(addprefix $(DIR_SOURCES)signals/, $(FILES_SIGNALS))
+SOURCES_PARSER = $(addprefix $(DIR_SOURCES)parser/, $(FILES_PARSER))
+SOURCES_EXECUTOR = $(addprefix $(DIR_SOURCES)executor/, $(FILES_EXECUTOR))
+SOURCES_BUILDTINGS = $(addprefix $(DIR_SOURCES)buildtings/, $(FILES_BUILDTINGS))
+
+SOURCES = $(SOURCES_CORE) $(SOURCES_SIGNALS) $(SOURCES_PARSER) $(SOURCES_EXECUTOR) $(SOURCES_BUILDTINGS)
 
 #OBJECTS
 DIR_OBJ = ./Obj/
@@ -57,10 +59,6 @@ $(LIBFT):
 	make -sC $(DIR_LIBFT)
 	@printf "$(GR)Libft created!$(RC)\n\n"
 
-$(MLX):
-	@printf "\n$(CY)Generating MiniLibX...$(RC)\n"
-	@make -sC $(MLX_PATH)
-	@printf "$(GR)MiniLibX created!$(RC)\n\n"
 
 $(DIR_OBJ)%.o: $(DIR_SOURCES)%.c
 	mkdir -p $(DIR_OBJ)
